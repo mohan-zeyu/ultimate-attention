@@ -1,13 +1,21 @@
 import torch
-from transformer import Decoder
+import test
 
 def main():
-    torch.manual_seed(42)  # same seed -> same weights, same input, every run
-    d_em = 8
-    d_k = 16
-    x = torch.randn(5, 3, d_em)
-    att = Decoder(d_k=d_k, d_em=d_em, num_heads=2)
-    print(att(x))
+    stdin = int(input("which one do you want to use?\n \
+                0 for play\n \
+                1 for calculation"))
+    device_stdin = int(input("which device do you want to use?\n \
+                0 for cpu\n \
+                1 for gpu"))
+    device = torch.device('mps') if device_stdin == 1 \
+                            else torch.device('cpu')
+
+    if stdin == 0:
+        test.test_play()
+    elif stdin == 1:
+        test.test_kv_cache(device)
+        
 
 if __name__ == '__main__':
     main()
